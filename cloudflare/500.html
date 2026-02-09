@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Error - Hack Club</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hack Club Error Page" />
+    <link rel="icon" href="https://assets.hackclub.com/favicon-32x32.png" />
+    <style>
+      @font-face {
+        font-family: "Phantom Sans";
+        src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2") format("woff2"),
+          url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Phantom Sans";
+        src: url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2") format("woff2"),
+          url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff") format("woff");
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+      body {
+        font-family: "Phantom Sans", system-ui, sans-serif;
+        text-align: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #121217;
+        color: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 3rem;
+        color: #ec3750;
+        margin: 0;
+        font-weight: 600;
+        text-shadow: 0 0 5px #ec3750;
+      }
+      .co {
+        position: relative;
+        margin: 1rem auto;
+        width: 90%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .d {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        border: 4px solid transparent;
+      }
+      .d::after {
+        content: attr(data-label);
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: #a2a2a2;
+        font-size: 0.8rem;
+      }
+      .d.g {
+        background-color: #33d6a6;
+        box-shadow: 0 0 50px #33d6a6;
+      }
+      .d.r {
+        background-color: #ec3750;
+        box-shadow: 0 0 50px #ec3750;
+      }
+      .l {
+        position: absolute;
+        height: 2px;
+        background-color: #252429;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+      p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 0.5rem 0;
+        color: #fff;
+      }
+      b {
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.4rem;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+      a {
+        color: #ec3750;
+        text-decoration: underline;
+      }
+      footer {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #8492a6;
+        font-family: monospace;
+      }
+      .cf-error-box {
+        margin: 1rem 0;
+        width: 100%;
+      }
+      @media (max-width: 480px) {
+        body { padding: 15px; }
+        h1 { font-size: 2rem; }
+        p { font-size: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Aw dang it!</h1>
+    <div class="co">
+      <div class="l"></div>
+      <div class="d g" data-label="You"></div>
+      <div class="d g" data-label="Cloudflare"></div>
+      <div class="d r" data-label="Server"></div>
+    </div>
+    <p>
+      <b>What happened?</b><br />
+      The server ran into an error and couldn't complete your request. This could be due to high load, maintenance, or other issues.
+    </p>
+    <p>
+      <b>What can I do?</b><br />
+      Please try again in a few minutes. If this keeps happening, contact whoever is hosting the service and they might have a fix.
+    </p>
+    <footer>Ray ID: ::RAY_ID:: &middot; Your IP: ::CLIENT_IP::</footer>
+  </body>
+</html>
