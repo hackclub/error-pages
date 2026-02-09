@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      @font-face {
+        font-family: "Phantom Sans";
+        src: url("/font/Regular.woff") format("woff"), url("/Regular.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Phantom Sans";
+        src: url("/font/Italic.woff") format("woff"), url("/Italic.woff2") format("woff2");
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Phantom Sans";
+        src: url("/font/Bold.woff") format("woff"), url("/Bold.woff2") format("woff2");
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Phantom Sans";
+        background: #121217;
+        color: #fff;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      #game-menu, #game-over-menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(18, 18, 23, 0.9);
+        z-index: 10;
+        text-align: center;
+        padding: 20px;
+      }
+      #game-menu p, #game-over-menu p {
+        font-size: 1.1rem;
+        color: #a2a2a2;
+        margin-bottom: 0.5rem;
+      }
+      #game-over-menu h2 {
+        font-size: 2rem;
+        color: #ec3750;
+        margin-bottom: 1rem;
+      }
+      #score {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 3rem;
+        font-weight: bold;
+        color: #33d6a6;
+        text-shadow: 0 0 20px #33d6a6;
+        z-index: 5;
+      }
+      .hint {
+        color: #33d6a6;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="score">0</div>
+    <div id="game-menu">
+      <p>Stack the blocks on top of each other</p>
+      <p>Click or press space when the block is aligned</p>
+      <p class="hint">Click to start</p>
+    </div>
+    <div id="game-over-menu">
+      <p id="final-score"></p>
+      <p class="hint">Click to play again</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script>
+      let camera, scene, renderer;
+      let world;
+      const originalBoxSize = 3;
+      const startPos = -5;
+      let stack = [], overhangs = [];
+      const boxHeight = 0.5;
+      let gameStarted = false;
+      let startMenu, gameOverMenu, scoreElement, finalScoreElement;
+
+      const resetScene = () => {
+        stack = [];
+        overhangs = [];
+        if (world) {
+          while (world.bodies.length > 0) {
+            world.remove(world.bodies[0]);
+          }
+        }
+        if (scene) {
+          while (scene.children.find((c) => c.type == "Mesh")) {
+            const mesh = scene.children.find((c) => c.type == "Mesh");
+            scene.remove(mesh);
+          }
+          addLayer(0, 0, originalBoxSize, originalBoxSize, "z");
+          addLayer(startPos, 0, originalBoxSize, originalBoxSize, "x");
+        }
+        if (camera) {
+          camera.position.set(4, 4, 4);
+          camera.lookAt(0, 0, 0);
+        }
+        scoreElement.textContent = "0";
+      };
+
+      const init = () => {
+        world = new CANNON.World();
+        world.gravity.set(0, -10, 0);
+        world.broadphase = new CANNON.NaiveBroadphase();
+        world.solver.iterations = 40;
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x121217);
+        
+        addLayer(0, 0, originalBoxSize, originalBoxSize, "z");
+        addLayer(startPos, 0, originalBoxSize, originalBoxSize, "x");
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(10, 20, 0);
+        scene.add(directionalLight);
+
+        const width = 10;
+        const height = width * (window.innerHeight / window.innerWidth);
+        camera = new THREE.OrthographicCamera(
+          -width / 2, width / 2, height / 2, -height / 2, 1, 100
+        );
+        camera.position.set(4, 4, 4);
+        camera.lookAt(0, 0, 0);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        window.addEventListener("resize", () => {
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          let newAspect = window.innerWidth / window.innerHeight;
+          let newHeight = width / newAspect;
+          camera.top = newHeight / 2;
+          camera.bottom = -newHeight / 2;
+          camera.updateProjectionMatrix();
+        });
+
+        renderer.render(scene, camera);
+      };
+
+      const addLayer = (x, z, width, depth, direction) => {
+        const y = boxHeight * stack.length;
+        const layer = generateBox(x, y, z, width, depth, false);
+        layer.direction = direction;
+        stack.push(layer);
+      };
+
+      const addOverHang = (x, z, width, depth) => {
+        const y = boxHeight * (stack.length - 1);
+        const overhang = generateBox(x, y, z, width, depth, true);
+        overhangs.push(overhang);
+      };
+
+      const generateBox = (x, y, z, width, depth, falls) => {
+        const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
+        const hue = 340 + stack.length * 8;
+        const color = new THREE.Color(`hsl(${hue % 360}, 80%, 55%)`);
+        const material = new THREE.MeshLambertMaterial({ color });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(x, y, z);
+        scene.add(mesh);
+
+        const shape = new CANNON.Box(
+          new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
+        );
+        let mass = falls ? 5 : 0;
+        const body = new CANNON.Body({ mass, shape });
+        body.position.set(x, y, z);
+        world.addBody(body);
+
+        return { threejs: mesh, cannonjs: body, width, depth };
+      };
+
+      const cutBox = (previousLayer, topLayer, direction, delta, overHangSize, size, overlap) => {
+        topLayer.threejs.scale[direction] = overlap / size;
+        topLayer.threejs.position[direction] = previousLayer.threejs.position[direction] + delta / 2;
+
+        topLayer.width = direction === "x" ? overlap : topLayer.width;
+        topLayer.depth = direction === "z" ? overlap : topLayer.depth;
+
+        topLayer.cannonjs.position[direction] = topLayer.threejs.position[direction];
+
+        const shape = new CANNON.Box(
+          new CANNON.Vec3(topLayer.width / 2, boxHeight / 2, topLayer.depth / 2)
+        );
+        topLayer.cannonjs.shapes = [];
+        topLayer.cannonjs.addShape(shape);
+
+        const newOverHangPos = topLayer.threejs.position[direction] + (Math.sign(delta) * (overlap + overHangSize)) / 2;
+        const overHangX = direction === "x" ? newOverHangPos : topLayer.threejs.position["x"];
+        const overHangZ = direction === "z" ? newOverHangPos : topLayer.threejs.position["z"];
+        const overHangWidth = direction === "x" ? overHangSize : topLayer.width;
+        const overHangDepth = direction === "z" ? overHangSize : topLayer.depth;
+        addOverHang(overHangX, overHangZ, overHangWidth, overHangDepth);
+      };
+
+      const animation = () => {
+        const speed = 0.10;
+        const topLayer = stack[stack.length - 1];
+
+        if (gameStarted) {
+          const pos = topLayer.threejs.position[topLayer.direction];
+          
+          if (topLayer.speed === undefined) topLayer.speed = speed;
+          if (pos > 5 || pos < -5) topLayer.speed = -topLayer.speed;
+          
+          topLayer.threejs.position[topLayer.direction] += topLayer.speed;
+          topLayer.cannonjs.position[topLayer.direction] += topLayer.speed;
+        }
+
+        if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
+          camera.position.y += speed;
+        }
+
+        updatePhysics();
+        renderer.render(scene, camera);
+      };
+
+      const updatePhysics = () => {
+        world.step(1 / 60);
+        overhangs.forEach((element) => {
+          element.threejs.position.copy(element.cannonjs.position);
+          element.threejs.quaternion.copy(element.cannonjs.quaternion);
+        });
+      };
+
+      window.addEventListener("load", () => {
+        init();
+        startMenu = document.getElementById("game-menu");
+        gameOverMenu = document.getElementById("game-over-menu");
+        scoreElement = document.getElementById("score");
+        finalScoreElement = document.getElementById("final-score");
+        gameOverMenu.style.display = "none";
+      });
+
+      window.addEventListener("click", (event) => {
+        if (event.target?.id === "game-over-menu" || event.target?.closest?.("#game-over-menu")) {
+          renderer.setAnimationLoop(null);
+          resetScene();
+          gameStarted = false;
+          gameOverMenu.style.display = "none";
+          startMenu.style.display = "flex";
+        } else if (!gameStarted) {
+          startMenu.style.display = "none";
+          renderer.setAnimationLoop(animation);
+          gameStarted = true;
+        } else {
+          const topLayer = stack[stack.length - 1];
+          const previousLayer = stack[stack.length - 2];
+          const direction = topLayer.direction;
+          const delta = topLayer.threejs.position[direction] - previousLayer.threejs.position[direction];
+          const overHangSize = Math.abs(delta);
+          const size = direction === "x" ? topLayer.width : topLayer.depth;
+          const overlap = size - overHangSize;
+
+          if (overlap > 0) {
+            cutBox(previousLayer, topLayer, direction, delta, overHangSize, size, overlap);
+            const nextX = direction === "x" ? topLayer.threejs.position.x : startPos;
+            const nextZ = direction === "z" ? topLayer.threejs.position.z : startPos;
+            const newWidth = direction === "x" ? overlap : topLayer.width;
+            const newDepth = direction === "z" ? overlap : topLayer.depth;
+            const nextDirection = direction === "x" ? "z" : "x";
+            addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+            scoreElement.textContent = stack.length - 2;
+          } else {
+            topLayer.cannonjs.mass = 5;
+            topLayer.cannonjs.type = CANNON.Body.DYNAMIC;
+            topLayer.cannonjs.updateMassProperties();
+            topLayer.cannonjs.wakeUp();
+            overhangs.push(topLayer);
+            gameStarted = false;
+            
+            finalScoreElement.textContent = `You score was ${stack.length - 2} blocks!`;
+            gameOverMenu.style.display = "flex";
+          }
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.code === "Space") {
+          event.preventDefault();
+          window.dispatchEvent(new Event("click"));
+        }
+      });
+    </script>
+  </body>
+</html>
