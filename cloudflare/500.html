@@ -115,10 +115,36 @@
       .cf-error-box {
         margin: 1rem 0;
         width: 100%;
+        text-align: left;
+      }
+      .cf-error-box h1 {
+        font-size: 2rem;
+        color: #ec3750;
+        text-shadow: 0 0 5px #ec3750;
+        text-align: center;
+        margin: 0.5rem 0;
+      }
+      .cf-error-box p,
+      .cf-error-box span {
+        color: #a2a2a2;
+        font-size: 1rem;
+        text-align: center;
+      }
+      .cf-error-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        text-align: center;
+        color: #8492a6;
+        font-size: 0.9rem;
+      }
+      .cf-error-box ul li {
+        margin: 0.25rem 0;
       }
       @media (max-width: 480px) {
         body { padding: 15px; }
         h1 { font-size: 2rem; }
+        .cf-error-box h1 { font-size: 1.5rem; }
         p { font-size: 1rem; }
       }
     </style>
