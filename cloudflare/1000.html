@@ -115,10 +115,36 @@
       .cf-error-box {
         margin: 1rem 0;
         width: 100%;
+        text-align: left;
+      }
+      .cf-error-box h1 {
+        font-size: 2rem;
+        color: #ec3750;
+        text-shadow: 0 0 5px #ec3750;
+        text-align: center;
+        margin: 0.5rem 0;
+      }
+      .cf-error-box p,
+      .cf-error-box span {
+        color: #a2a2a2;
+        font-size: 1rem;
+        text-align: center;
+      }
+      .cf-error-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        text-align: center;
+        color: #8492a6;
+        font-size: 0.9rem;
+      }
+      .cf-error-box ul li {
+        margin: 0.25rem 0;
       }
       @media (max-width: 480px) {
         body { padding: 15px; }
         h1 { font-size: 2rem; }
+        .cf-error-box h1 { font-size: 1.5rem; }
         p { font-size: 1rem; }
       }
     </style>
@@ -135,10 +161,38 @@
       <b>What happened?</b><br />
       Cloudflare detected a DNS or configuration issue that's preventing this page from loading.
     </p>
+    <div class="cf-error-box">::CLOUDFLARE_ERROR_1000S_BOX::</div>
     <p>
       <b>What can I do?</b><br />
      Please try again in a few minutes. If this keeps happening, contact whoever is hosting the service and they might have a fix. If you're the site owner, check your DNS settings. If more help is needed, reach out in <a href="https://hackclub.enterprise.slack.com/archives/C05SVRTCDGV">#hq-engineering</a>.
     </p>
     <footer>Ray ID: ::RAY_ID:: &middot; Your IP: ::CLIENT_IP::</footer>
+    <script>
+      (function() {
+        var b = document.querySelector('.cf-error-box');
+        var d = b && b.querySelector('[class*="cf-error-details"]');
+        if (!d) return;
+
+        var h = d.querySelector('h1');
+        if (h && h.textContent.trim()) document.querySelector('body > h1').textContent = h.textContent.trim();
+
+        var p = d.querySelectorAll('p');
+        if (p.length) {
+          var w = document.querySelectorAll('body > p')[0];
+          if (w) w.innerHTML = '<b>What happened?</b><br />' + [].map.call(p, function(e) { return e.textContent.trim(); }).join(' ');
+        }
+
+        var r = '', ip = '';
+        [].forEach.call(d.querySelectorAll('li'), function(l) {
+          var t = l.textContent;
+          if (~t.indexOf('Ray ID')) r = t.replace('Ray ID:', '').trim();
+          if (~t.indexOf('IP address')) ip = t.replace('Your IP address:', '').trim();
+        });
+        var f = document.querySelector('footer');
+        if (f && (r || ip)) f.innerHTML = [r && 'Ray ID: ' + r, ip && 'Your IP: ' + ip].filter(Boolean).join(' &middot; ');
+
+        b.style.display = 'none';
+      })();
+    </script>
   </body>
 </html>
