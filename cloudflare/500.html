@@ -167,5 +167,32 @@
       Please try again in a few minutes. If this keeps happening, contact whoever is hosting the service and they might have a fix.
     </p>
     <footer>Ray ID: ::RAY_ID:: &middot; Your IP: ::CLIENT_IP::</footer>
+    <script>
+      (function() {
+        var b = document.querySelector('.cf-error-box');
+        var d = b && b.querySelector('[class*="cf-error-details"]');
+        if (!d) return;
+
+        var h = d.querySelector('h1');
+        if (h && h.textContent.trim()) document.querySelector('body > h1').textContent = h.textContent.trim();
+
+        var p = d.querySelectorAll('p');
+        if (p.length) {
+          var w = document.querySelectorAll('body > p')[0];
+          if (w) w.innerHTML = '<b>What happened?</b><br />' + [].map.call(p, function(e) { return e.textContent.trim(); }).join(' ');
+        }
+
+        var r = '', ip = '';
+        [].forEach.call(d.querySelectorAll('li'), function(l) {
+          var t = l.textContent;
+          if (~t.indexOf('Ray ID')) r = t.replace('Ray ID:', '').trim();
+          if (~t.indexOf('IP address')) ip = t.replace('Your IP address:', '').trim();
+        });
+        var f = document.querySelector('footer');
+        if (f && (r || ip)) f.innerHTML = [r && 'Ray ID: ' + r, ip && 'Your IP: ' + ip].filter(Boolean).join(' &middot; ');
+
+        b.style.display = 'none';
+      })();
+    </script>
   </body>
 </html>
