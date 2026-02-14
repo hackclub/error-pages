@@ -285,6 +285,10 @@
         const t = parseInt(e);
         n.textContent = t >= 0 && t < s.length ? s[t] : "unknown-server";
       }
+      console.log(
+        "%cServer info: " + document.referrer || "unknown",
+        "color: #ec3750; font-weight: bold; font-size: 1.2rem;"
+      );
     });
     document.getElementById("p").onclick = function (e) {
       e.preventDefault();
