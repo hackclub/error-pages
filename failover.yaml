@@ -1,0 +1,25 @@
+http:
+  routers:
+    catchall:
+      entryPoints:
+        - http
+        - https
+      service: noop
+      rule: PathPrefix(`/`)
+      tls:
+        certResolver: letsencrypt
+      priority: -1000
+      middlewares:
+        - failover-redirect
+  services:
+    noop:
+      loadBalancer:
+        servers:
+          -
+            url: ''
+  middlewares:
+    failover-redirect:
+      redirectRegex:
+        regex: '^https?://([^/]+)(.*)'
+        replacement: 'https://failover.hackclub.dev/?s=0&host=${1}&path=${2}'
+        permanent: false
