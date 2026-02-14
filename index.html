@@ -40,4 +40,258 @@
 
 - 3kh0 :3
 -->
-<!doctype html><html lang="en"><title>Coolify - Server error</title><meta charset="UTF-8"><meta content="width=device-width"name="viewport"><meta content="Hack Club Coolify Error"name="description"><link href="/favicon.ico"rel="icon"><link href="https://hackclub.com"rel="canonical"><style>@font-face{font-family:"Phantom Sans";src:url(/font/Regular.woff) format("woff"),url(/font/Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Phantom Sans";src:url(/font/Italic.woff) format("woff"),url(/font/Italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}@font-face{font-family:"Phantom Sans";src:url(/font/Bold.woff) format("woff"),url(/font/Bold.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}body{font-family:"Phantom Sans";text-align:center;min-height:100vh;margin:0;padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#121217;color:#fff;max-width:600px;margin:0 auto}h1{font-size:3rem;color:#ec3750;margin:0;font-weight:600;text-shadow:0 0 5px #ec3750}.co{position:relative;margin:1rem auto;width:90%;height:60px;display:flex;justify-content:space-between;align-items:center}.d{width:12px;height:12px;border-radius:50%;position:relative;z-index:2;border:4px solid transparent}.d::after{content:attr(data-label);position:absolute;top:20px;left:50%;transform:translateX(-50%);white-space:nowrap;color:#a2a2a2;font-size:.8rem}.d.g{background-color:#33d6a6;box-shadow:0 0 50px #33d6a6}.d.r{background-color:#ec3750;box-shadow:0 0 50px #ec3750}.l{position:absolute;height:2px;background-color:#252429;top:50%;left:0;right:0;transform:translateY(-50%);z-index:1}p{font-size:1.2rem;line-height:1.6;margin:.5rem 0;color:#fff}b{color:#fff;font-weight:600;font-size:1.4rem;text-shadow:0 0 10px rgba(255,255,255,.5)}footer{margin-top:.5rem;font-size:.9rem;color:#8492a6;font-family:monospace}@media (max-width:480px){body{padding:15px}h1{font-size:2rem}p{font-size:1rem}}#m{display:none;position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(18,18,23,.95);justify-content:center;align-items:center}#m>div{position:relative;width:90vw;max-width:1200px;height:80vh;max-height:700px;box-shadow:0 0 40px #0008;border-radius:12px;overflow:hidden;background:#18181f;display:flex;flex-direction:column;border-radius:25px;border:2px solid #252429}#c{position:absolute;top:10px;right:10px;background:#ec3750;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3rem;cursor:pointer;z-index:10}iframe{flex:1;width:100%;height:100%;border:none;background:#18181f}</style><h1>Aw dang it!</h1><div class="co"><div class="l"></div><div class="d g"data-label="Client"></div><div class="d g"data-label="Proxy"></div><div class="d r"data-label="Server"></div></div><p><b>What happened?</b><br>You got sent here because the server is unable to handle your request right now. This could be due to high load, maintenance, or other issues.<p><b>What can I do?</b><br>Please try again in a few minutes. If this keeps happening, contact whoever is hosting the service and they might have a fix. If you want, you can also play <a href="#"id="p"style="color:#ec3750;text-decoration:underline;cursor:pointer">a little game</a> to pass the time!<footer>Connected to <span id="s"></span> with traefik:v3.6</footer><div id="m"><div><button id="c"style="display:flex;justify-content:center;align-items:center"><svg style="width:20px;height:20px"viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg"><path d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"fill="currentColor"/></svg></button><iframe src="/game.html"title="game"></iframe></div></div><script>const s=["coolify-app-server-a@hetzner","coolify-app-server-b@hetzner","coolify-app-server-hackatime@hetzner"];function a(e){return new URLSearchParams(window.location.search).get(e)}window.addEventListener("DOMContentLoaded",function(){const e=a("s"),n=document.getElementById("s");if(null===e||isNaN(e)){n.textContent="coolify"}else{const t=parseInt(e);n.textContent=t>=0&&t<s.length?s[t]:"unknown-server"}});document.getElementById('p').onclick=function(e){e.preventDefault();document.getElementById('m').style.display='flex'};document.getElementById('c').onclick=function(){document.getElementById('m').style.display='none'};</script>
+<!doctype html>
+<html lang="en">
+  <title>Coolify - Server error</title
+  ><meta charset="UTF-8" /><meta
+    content="width=device-width"
+    name="viewport"
+  /><meta content="Hack Club Coolify Error" name="description" /><link
+    href="/favicon.ico"
+    rel="icon"
+  /><link href="https://hackclub.com" rel="canonical" /><style>
+    @font-face {
+      font-family: "Phantom Sans";
+      src:
+        url(/font/Regular.woff) format("woff"),
+        url(/font/Regular.woff2) format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Phantom Sans";
+      src:
+        url(/font/Italic.woff) format("woff"),
+        url(/font/Italic.woff2) format("woff2");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Phantom Sans";
+      src:
+        url(/font/Bold.woff) format("woff"),
+        url(/font/Bold.woff2) format("woff2");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    body {
+      box-sizing: border-box;
+      font-family: "Phantom Sans", system-ui, sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #121217;
+      color: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      overflow-y: auto;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #ec3750;
+      margin: 0;
+      font-weight: 600;
+      text-shadow: 0 0 5px #ec3750;
+    }
+    .co {
+      position: relative;
+      margin: 1rem auto;
+      width: 90%;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .d {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      border: 4px solid transparent;
+    }
+    .d::after {
+      content: attr(data-label);
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      color: #a2a2a2;
+      font-size: 0.8rem;
+    }
+    .d.g {
+      background-color: #33d6a6;
+      box-shadow: 0 0 50px #33d6a6;
+    }
+    .d.r {
+      background-color: #ec3750;
+      box-shadow: 0 0 50px #ec3750;
+    }
+    .l {
+      position: absolute;
+      height: 2px;
+      background-color: #252429;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 0.5rem 0;
+      color: #fff;
+    }
+    b {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.4rem;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    footer {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #8492a6;
+      font-family: monospace;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+    #m {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(18, 18, 23, 0.95);
+      justify-content: center;
+      align-items: center;
+    }
+    #m > div {
+      position: relative;
+      width: 90vw;
+      max-width: 1200px;
+      height: 80vh;
+      max-height: 700px;
+      box-shadow: 0 0 40px #0008;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #18181f;
+      display: flex;
+      flex-direction: column;
+      border-radius: 25px;
+      border: 2px solid #252429;
+    }
+    #c {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ec3750;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #18181f;
+    }
+  </style>
+  <h1>Aw dang it!</h1>
+  <div class="co">
+    <div class="l"></div>
+    <div class="d g" data-label="Client"></div>
+    <div class="d g" data-label="Proxy"></div>
+    <div class="d r" data-label="Server"></div>
+  </div>
+  <p>
+    <b>What happened?</b><br />You got sent here because the server is unable to
+    handle your request right now. This could be due to high load, maintenance,
+    or other issues.
+  </p>
+  <p>
+    <b>What can I do?</b><br />Please try again in a few minutes. If this keeps
+    happening, contact whoever is hosting the service and they might have a fix.
+    If you want, you can also play
+    <a
+      href="#"
+      id="p"
+      style="color: #ec3750; text-decoration: underline; cursor: pointer"
+      >a little game</a
+    >
+    to pass the time!
+  </p>
+  <footer>Connected to <span id="s"></span> with traefik:v3.6</footer>
+  <div id="m">
+    <div>
+      <button
+        id="c"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <svg
+          style="width: 20px; height: 20px"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"
+            fill="currentColor"
+          />
+        </svg></button
+      ><iframe src="/game.html" title="game"></iframe>
+    </div>
+  </div>
+  <script>
+    const s = [
+      "coolify-app-server-a@hetzner",
+      "coolify-app-server-b@hetzner",
+      "coolify-app-server-hackatime@hetzner",
+    ];
+    function a(e) {
+      return new URLSearchParams(window.location.search).get(e);
+    }
+    window.addEventListener("DOMContentLoaded", function () {
+      const e = a("s"),
+        n = document.getElementById("s");
+      if (null === e || isNaN(e)) {
+        n.textContent = "coolify";
+      } else {
+        const t = parseInt(e);
+        n.textContent = t >= 0 && t < s.length ? s[t] : "unknown-server";
+      }
+    });
+    document.getElementById("p").onclick = function (e) {
+      e.preventDefault();
+      document.getElementById("m").style.display = "flex";
+    };
+    document.getElementById("c").onclick = function () {
+      document.getElementById("m").style.display = "none";
+    };
+  </script>
+</html>
