@@ -231,8 +231,8 @@
     <div class="d r" data-label="Server"></div>
   </div>
   <p>
-    <b>What happened?</b><br />You got sent here because the server is unable to
-    handle your request right now. This could be due to high load, maintenance,
+    <b>What happened?</b><br /><span id="w">You got sent here because the server is unable to
+    handle your request right now.</span> This could be due to high load, maintenance,
     or other issues.
   </p>
   <p>
@@ -285,8 +285,18 @@
         const t = parseInt(e);
         n.textContent = t >= 0 && t < s.length ? s[t] : "unknown-server";
       }
+      const host = a("host"),
+        path = a("path"),
+        w = document.getElementById("w");
+      if (host) {
+        const url = host + (path || "");
+        w.innerHTML =
+          'You were trying to reach <b style="color:#ec3750">' +
+          url.replace(/</g, "&lt;") +
+          "</b> but the server is unable to handle your request right now.";
+      }
       console.log(
-        "%cServer info: " + document.referrer || "unknown",
+        "%cServer info: " + (host || document.referrer || "unknown"),
         "color: #ec3750; font-weight: bold; font-size: 1.2rem;"
       );
     });
