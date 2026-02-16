@@ -3,27 +3,29 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
+    <link rel="preload" href="/font/Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/font/Bold.woff2" as="font" type="font/woff2" crossorigin />
     <style>
       @font-face {
         font-family: "Phantom Sans";
-        src: url("/font/Regular.woff") format("woff"), url("/Regular.woff2") format("woff2");
+        src: url("/font/Regular.woff2") format("woff2"), url("/font/Regular.woff") format("woff");
         font-weight: normal;
         font-style: normal;
-        font-display: swap;
+        font-display: block;
       }
       @font-face {
         font-family: "Phantom Sans";
-        src: url("/font/Italic.woff") format("woff"), url("/Italic.woff2") format("woff2");
+        src: url("/font/Italic.woff2") format("woff2"), url("/font/Italic.woff") format("woff");
         font-weight: normal;
         font-style: italic;
-        font-display: swap;
+        font-display: block;
       }
       @font-face {
         font-family: "Phantom Sans";
-        src: url("/font/Bold.woff") format("woff"), url("/Bold.woff2") format("woff2");
+        src: url("/font/Bold.woff2") format("woff2"), url("/font/Bold.woff") format("woff");
         font-weight: bold;
         font-style: normal;
-        font-display: swap;
+        font-display: block;
       }
       * {
         margin: 0;
