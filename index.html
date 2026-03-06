@@ -222,6 +222,10 @@
         background: #18181f;
       }
     </style>
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
   </head>
   <body>
     <h1>Aw dang it!</h1>
@@ -307,6 +311,14 @@
           `%cServer info: ${host || document.referrer || "unknown"}`,
           "color: #ec3750; font-weight: bold; font-size: 1.2rem;",
         );
+
+        window.va("event", {
+          name: "error_hit",
+          data: {
+            host: host || "unknown",
+            path: path || "/",
+          },
+        });
       });
 
       document.getElementById("p").onclick = (e) => {
