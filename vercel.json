@@ -1,6 +1,10 @@
 {
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "/",
       "status": 503,
       "dest": "/index.html"
