@@ -300,12 +300,17 @@
           path = param("path");
         if (host) {
           const url = `${host}${path && path !== "/" ? path : ""}`;
-          document.getElementById(
-            "w",
-          ).innerHTML = `You were trying to reach <a href="${`https://${url}`}" style="color: #ec3750; text-decoration: underline; text-shadow: none;">${url.replace(
-            /</g,
-            "&lt;",
-          )}</a> but the server is unable to handle your request right now.`;
+          const m = document.getElementById("w");
+          const l = document.createElement("a");
+          l.href = `https://${url}`;
+          l.textContent = url;
+          l.style.color = "#ec3750";
+          l.style.textDecoration = "underline";
+          l.style.textShadow = "none";
+
+          m.replaceChildren(
+            "You were trying to reach ", l," but the server is unable to handle your request right now.",
+          );
         }
         console.log(
           `%cServer info: ${host || document.referrer || "unknown"}`,
