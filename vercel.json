@@ -1,9 +1,0 @@
-{
-  "routes": [
-    {
-      "src": "/",
-      "status": 503,
-      "dest": "/index.html"
-    }
-  ]
-}
